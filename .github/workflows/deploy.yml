@@ -16,9 +16,13 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run build
-      - uses: josephbmanley/butler-publish-itchio-action@v1.0.1
-        with:
-          butler_api_key: ${{ secrets.BUTLER_KEY }}
-          itch_user: ${{ secrets.ITCH_USER }}
-          itch_game: ${{ secrets.ITCH_GAME }}
-          build_file: dist/
+      - name: Install butler
+        run: |
+          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST
+          unzip butler.zip -d butler
+          chmod +x butler/butler
+          echo "$PWD/butler" >> $GITHUB_PATH
+      - name: Push to itch.io
+        run: butler push dist/ ${{ secrets.ITCH_USER }}/${{ secrets.ITCH_GAME }}:windows-linux-web
+        env:
+          BUTLER_API_KEY: ${{ secrets.BUTLER_KEY }}
