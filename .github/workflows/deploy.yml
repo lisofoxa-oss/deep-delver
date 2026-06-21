@@ -18,7 +18,8 @@ jobs:
       - run: npm run build
       - name: Install butler
         run: |
-          curl -L -o butler.zip https://broth.itch.ovh/butler/linux-amd64/LATEST
+          # Download butler from GitHub releases (itch.ovh DNS unreliable on runners)
+          curl -sL -o butler.zip "https://github.com/itchio/butler/releases/download/v15.27.0/butler-linux-amd64.zip"
           unzip butler.zip -d butler
           chmod +x butler/butler
           echo "$PWD/butler" >> $GITHUB_PATH
