@@ -1,0 +1,24 @@
+name: Deploy to itch.io
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: # allows manual trigger from GitHub UI
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - uses: josephbmanley/butler-publish-itchio-action@v1.0.1
+        with:
+          butler_api_key: ${{ secrets.BUTLER_KEY }}
+          itch_user: ${{ secrets.ITCH_USER }}
+          itch_game: ${{ secrets.ITCH_GAME }}
+          build_file: dist/

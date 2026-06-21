@@ -1,0 +1,17 @@
+{
+  "name": "deep-delver",
+  "version": "1.0.0",
+  "description": "A traditional roguelike — procedural dungeons, turn-based combat, and permadeath.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "devDependencies": {
+    "vite": "^6.3.0",
+    "vitest": "^3.1.0"
+  }
+}
